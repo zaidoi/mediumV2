@@ -1,0 +1,8 @@
+{
+    "name": "mediumv2",
+    "private":"true",
+    "workspaces":[
+        "apps/*",
+        "packages/*"
+    ]
+}
