@@ -55,7 +55,7 @@ export async function loginController(req: Request, res: Response) {
         message: "Invalid password",
       });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string);
 
     res.status(200).json({
       token,

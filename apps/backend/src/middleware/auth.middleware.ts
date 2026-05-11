@@ -1,5 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import  type {JwtPayload} from 'jsonwebtoken'
+
 
 export const authMiddleware = async (
   req: Request,
@@ -15,8 +17,11 @@ export const authMiddleware = async (
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user?.id = decoded;
+    interface MyPayload extends JwtPayload {
+      userId:string
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as MyPayload
+    req.userId = decoded.userId;
     next();
   } catch (error) {
     return res.status(400).json({
