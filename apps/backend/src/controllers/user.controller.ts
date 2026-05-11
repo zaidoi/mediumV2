@@ -16,20 +16,28 @@ export async function signupController(req: Request, res: Response) {
       });
     }
 
-    const body: SignupInput = req.body;
+    const body: SignupInput = parsedBody.data;
     const { name, email, password } = body;
+    const existingUser = await User.findOne({email});
+    if(existingUser){
+      return res.status(400).json({
+        message:"User already exist"
+      })
+    }
+
 
     const hashedPassword = await hash(password, 10);
 
-    const user = User.create({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
+    const {password:_,...safeUser} = user.toObject()
     res.status(200).json({
       message: "User is created",
-      user,
+      safeUser
     });
   } catch (error) {
     res.status(500).json({
