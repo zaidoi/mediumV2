@@ -39,33 +39,31 @@ export async function signupController(req: Request, res: Response) {
   }
 }
 
-export async function loginController(req:Request,res:Response){
-    try {
+export async function loginController(req: Request, res: Response) {
+  try {
+    const { email, password }: { email: string; password: string } = req.body;
 
-        const {email,password} = req.body;
-
-        const user = await User.findOne({email})
-        if(!user){
-            res.status(400).json({
-                message:"User not found"
-            })
-        }
-        const passwordMatch = await compare(password,user.password)
-        if(!passwordMatch){
-            return res.status(400).json({
-                message:"Invalid password"
-            })
-        }
-        const token = jwt.sign({id:user._id},process.env.JWT_SECRET as string)
-
-        res.status(200).json({
-            token
-        })
-        
-    } catch (error) {
-        res.status(500).json({
-            message:"Error while login",
-            error:error
-        })
+    const user = await User.findOne({ email });
+    if (!user || !user.password) {
+      return res.status(400).json({
+        message: "User not found",
+      });
     }
+    const passwordMatch = await compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(400).json({
+        message: "Invalid password",
+      });
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string);
+
+    res.status(200).json({
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error while login",
+      error: error,
+    });
+  }
 }
