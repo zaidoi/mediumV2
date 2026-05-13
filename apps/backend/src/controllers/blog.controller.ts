@@ -3,7 +3,6 @@ import { Blog } from "src/models/models.js";
 import { blogSchema } from "@repo/common/src/zod/models.js";
 import type { BlogInput } from "@repo/common/src/zod/models.js";
 
-
 export async function createBlog(req: Request, res: Response) {
   try {
     const userId = req.userId;
@@ -41,9 +40,36 @@ export async function createBlog(req: Request, res: Response) {
 
 export async function allBlogs(req: Request, res: Response) {
   try {
-    const allBlogs = Blog.find({}).populate("author","name email");
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const search = req.query.search as string;
+    const sort = req.query.sort;
+
+    const skip = (page - 1) * limit;
+
+    const filter = search
+      ? {
+          title: {
+            $regex: search,
+            $options: "i",
+          },
+        }
+      : {};
+
+    let sortOption = {};
+    if (sort === "latest") sortOption = { createdAt: -1 };
+    if (sort === "oldest") sortOption = { createdAt: 1 };
+
+    const allBlogs = await Blog.find(filter)
+      .populate("author", "name email")
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
+      page,
+      limit,
+      total: allBlogs.length,
       allBlogs,
     });
   } catch (error) {
@@ -57,7 +83,7 @@ export async function allBlogs(req: Request, res: Response) {
 export async function getBlog(req: Request, res: Response) {
   try {
     const id = req.params.id;
-    const blog = await Blog.findById(id).populate("author","name");
+    const blog = await Blog.findById(id).populate("author", "name");
     if (!blog) {
       return res.status(400).json({
         message: "Blog not found",
