@@ -18,13 +18,12 @@ export async function signupController(req: Request, res: Response) {
 
     const body: SignupInput = parsedBody.data;
     const { name, email, password } = body;
-    const existingUser = await User.findOne({email});
-    if(existingUser){
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({
-        message:"User already exist"
-      })
+        message: "User already exist",
+      });
     }
-
 
     const hashedPassword = await hash(password, 10);
 
@@ -34,10 +33,10 @@ export async function signupController(req: Request, res: Response) {
       password: hashedPassword,
     });
 
-    const {password:_,...safeUser} = user.toObject()
+    const { password: _, ...safeUser } = user.toObject();
     res.status(200).json({
       message: "User is created",
-      safeUser
+      safeUser,
     });
   } catch (error) {
     res.status(500).json({
@@ -63,7 +62,10 @@ export async function loginController(req: Request, res: Response) {
         message: "Invalid password",
       });
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string);
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET as string,
+    );
 
     res.status(200).json({
       token,
