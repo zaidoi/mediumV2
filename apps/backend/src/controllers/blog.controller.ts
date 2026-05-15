@@ -1,7 +1,8 @@
 import { type Request, type Response } from "express";
 import { Blog } from "src/models/models.js";
-import { blogSchema } from "@repo/common/src/zod/models.js";
+import common from "@repo/common"
 import type { BlogInput } from "@repo/common/src/zod/models.js";
+const {blogSchema} = common; // This from monorepo because of exports default problem
 
 export async function createBlog(req: Request, res: Response) {
   try {
@@ -89,6 +90,10 @@ export async function getBlog(req: Request, res: Response) {
         message: "Blog not found",
       });
     }
+    return res.status(200).json({
+      message:"Post",
+      blog
+    })
   } catch (error) {
     res.status(500).json({
       message: "Error while fetching blog",

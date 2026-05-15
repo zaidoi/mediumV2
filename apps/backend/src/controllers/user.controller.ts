@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
 import { hash, compare } from "bcrypt-ts";
 import { User } from "../models/models.js";
-import { signupSchema } from "@repo/common/src/zod/models.js";
+import common from "@repo/common"
+
 import type { SignupInput } from "@repo/common/src/zod/models.js";
 import type { Request, Response } from "express";
+const {signupSchema} = common
 
 export async function signupController(req: Request, res: Response) {
   try {
