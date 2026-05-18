@@ -16,6 +16,8 @@
     "@tailwindcss/vite": "^4.3.0",
     "axios": "^1.16.1",
     "lucide-react": "^1.16.0",
+    "primereact": "^10.9.8",
+    "quill": "^2.0.3",
     "react": "^19.2.6",
     "react-animated-heart": "^0.0.8",
     "react-dom": "^19.2.6",

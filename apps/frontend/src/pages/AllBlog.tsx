@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import AllBlogCard from "../components/AllBlogCard";
+import Navbar from "../components/Navbar";
 
 const AllBlog = () => {
   const [searchItem, setSearchItem] = useState("");
   return (
+    <>
+    <Navbar display="true"/>
     <div className="p-4  flex flex-col  items-center gap-2">
       <div className="max-w-xl">
         <input 
@@ -21,6 +24,7 @@ const AllBlog = () => {
         <AllBlogCard />
       </div>
     </div>
+    </>
   );
 };
 

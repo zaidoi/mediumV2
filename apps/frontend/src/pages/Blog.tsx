@@ -1,11 +1,15 @@
 import BlogCard from "../components/BlogCard"
+import Navbar from "../components/Navbar"
 
 
 const Blog = () => {
   return (
-    <div>
+    <>
+    <Navbar display="true"/>
+    <div className="flex justify-center mt-2.5 h-creen">
         <BlogCard/>
     </div>
+    </>
   )
 }
 
