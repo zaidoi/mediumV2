@@ -3,7 +3,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import AllBlog from "./pages/AllBlog";
 import Blog from "./pages/Blog";
-import MakeBlog from "./pages/CreateBlog";
+import CreateBlog from "./pages/CreateBlog";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element:<Blog/>
     },{
         path:"/create",
-        element:<MakeBlog/>
+        element:<CreateBlog/>
     }
 ])
 
