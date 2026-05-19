@@ -2,19 +2,19 @@
 import Form from '../components/Form'
 import axios from 'axios'
 import type { SignupInput } from '@repo/common/src/zod/models'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
   
-
+const navigate  = useNavigate()
   const onSubmit = async (data:SignupInput) => {
    
     try {
       const res = await axios.post("http://localhost:3000/user/login",data);
 
       localStorage.setItem('token',res.data.token)
-      console.log("worked")
-      console.log(res.data.token)
+      navigate('/blogs')
     } catch (error) {
       if(error instanceof Error){
         console.log(error.message)

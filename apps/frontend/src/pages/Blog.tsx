@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react"
 import BlogCard from "../components/BlogCard"
 import Navbar from "../components/Navbar"
 
 
 const Blog = () => {
+  const [loading,setLoading ] = useState(true)
+
+  useEffect(()=>{})
   return (
     <>
     <Navbar display="true"/>
