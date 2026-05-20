@@ -24,7 +24,7 @@ const CreateBlog = () => {
       setTimeout(() => {
         setResponse(null);
         navigate("/blogs");
-      }, 2000);
+      }, 1000);
 
     } catch (error) {
       if (error instanceof Error) {

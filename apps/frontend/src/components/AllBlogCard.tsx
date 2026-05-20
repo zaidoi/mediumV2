@@ -3,6 +3,8 @@ import { Avatar } from "@mui/material";
 import { Heart } from "lucide-react";
 import Comment from "./Comment";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 type blogContent = {
   title: string;
@@ -90,8 +92,8 @@ const AllBlogCard = ({ title, content, date, author, id }: blogContent) => {
       </div>
 
       <div className="flex flex-col  gap-1">
-        <h1 className="text-xl font-bold">{title}</h1>
-        <p className="text-balance font-light">{content.slice(1, 100)}...</p>
+        <Link to={`/blog/${id}`}> <h1 className="text-xl font-bold">{title}</h1></Link>
+        <p className="text-balance font-light">{content.slice(0, 100)}...</p>
       </div>
 
       <div className="flex justify-between">

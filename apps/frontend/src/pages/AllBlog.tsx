@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import AllBlogCard from "../components/AllBlogCard";
 import Navbar from "../components/Navbar";
-import { data, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const AllBlog = () => {
@@ -67,7 +67,7 @@ const AllBlog = () => {
           </select>
         </div>
         <div>
-          {allBlogs.map((blog) => (
+          {allBlogs.map((blog:any) => (
             <AllBlogCard id={blog._id} title={blog.title} content={blog.content} author={blog.author.name} date={blog.createdAt}/>
           ))}
         </div>

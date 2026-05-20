@@ -1,27 +1,60 @@
 import { Avatar } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const BlogCard = ({ title, content, date, author }) => {
-  const dateParse = new Date(date);
-  return (
-    <div className=" flex flex-col  h-full  md:flex md:flex-row p-4 max-w-5xl gap-5 md:gap-4">
-      <div className="flex flex-col gap-4  md:w-7xl ">
-        <h1 className="text-3xl font-bold">
-          Taxing Laughter:The Joke Tax Chronicles
-        </h1>
-        <p className="text-gray-500 text-base ">Posted on August 24,2026</p>
-        <p className="text-balance">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque
-          delectus nulla, quidem ipsam culpa vel incidunt atque repellat tempora
-          mollitia asperiores ullam aliquam reiciendis. Laborum velit quam
-          temporibus ab facere explicabo et tenetur, quod illum esse sed
-          inventore aperiam qui voluptatem vero quibusdam praesentium facilis
-          atque pariatur in dolore. 
-        </p>
+interface getBlog {
+  title : string,
+  content:string,
+  author:string,
+  id:string
+  date:string
+}
+
+const BlogCard = ({ title, content, date, author, id }:getBlog) => {
+  const navigate = useNavigate()
+  const [deleteRes, setDeleteRes] = useState<string |null>();
+
+  const deleteBlog = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      const res = await axios.delete(`http://localhost:3000/blogs/${id}`, {
+        headers: {
+          Authorization: token as string,
+        },
+      });
+      setDeleteRes(res.data.message);
+      setTimeout(() => {
+        navigate('/blogs')
+        setDeleteRes(null)
+
+      },1000)
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+
+  const dateParse = new Date(date).toLocaleDateString("en-GB", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return deleteRes ? (
+    <div className="text-xl text-red-600">{deleteRes}</div>
+  ) : (
+    <div className=" flex flex-col  h-full  md:flex md:flex-row p-4 max-w-4xl gap-5 md:gap-4">
+      <div className="flex flex-col gap-3  md:w-auto shadow p-2 rounded">
+        <h1 className="text-3xl font-bold">{title}</h1>
+        <p className="text-gray-500 text-base ">Posted on {dateParse}</p>
+        <p className="text-balance">{content}</p>
         <div className="flex justify-between mt-1 ">
           <span className="text-right md:text-left">
-            <button className="bg-red-600 p-2 rounded">Delete</button>
+            <button className="bg-red-600 p-2 rounded" onClick={deleteBlog}>Delete</button>
           </span>
-          <span className="text-right">
+          <span className="text-left">
             <button className="bg-amber-600 p-2 rounded">Update</button>
           </span>
         </div>
@@ -37,12 +70,9 @@ const BlogCard = ({ title, content, date, author }) => {
             <Avatar />
           </div>
           <div className="flex flex-col gap-2">
-            <h2 className="font-bold text-lg">Jokester</h2>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe
-              eaque aperiam autem quibusdam nulla voluptatum praesentium nisi
-              non quod consectetur.
-            </p>
+            <h2 className="font-bold text-lg">
+              {author?.charAt(0).toUpperCase() + author?.slice(1)}
+            </h2>
           </div>
         </div>
       </div>
