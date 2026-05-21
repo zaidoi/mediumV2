@@ -4,7 +4,6 @@
     // File Layout
     "outDir": "./dist",
     "rootDir": "src",
-    "baseUrl": ".",
     "paths": {
       "@repo/common":["../../packages/common/src"]
     },
@@ -12,7 +11,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "es2020",
-    "types": ["module"],
+    "types": ["node"],
     "esModuleInterop": true,
     // For nodejs:
     // "lib": ["esnext"],
