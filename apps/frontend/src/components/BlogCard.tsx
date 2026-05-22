@@ -1,7 +1,9 @@
 import { Avatar } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AllComment from "./AllComment";
+
 
 interface getBlog {
   title : string,
@@ -14,6 +16,10 @@ interface getBlog {
 const BlogCard = ({ title, content, date, author, id }:getBlog) => {
   const navigate = useNavigate()
   const [deleteRes, setDeleteRes] = useState<string |null>();
+
+
+  
+
 
   const deleteBlog = async () => {
     const token = localStorage.getItem("token");
@@ -45,8 +51,8 @@ const BlogCard = ({ title, content, date, author, id }:getBlog) => {
   return deleteRes ? (
     <div className="text-xl text-red-600">{deleteRes}</div>
   ) : (
-    <div className=" flex flex-col  h-full  md:flex md:flex-row p-4 max-w-4xl gap-5 md:gap-4">
-      <div className="flex flex-col gap-3  md:w-auto shadow p-2 rounded">
+    <div className=" flex flex-col  h-full w-xl  md:flex md:flex-row justify-between p-4 max-w-4xl gap-5 md:gap-4">
+      <div className="flex flex-col gap-3  md:w-xl  p-2 rounded">
         <h1 className="text-3xl font-bold">{title}</h1>
         <p className="text-gray-500 text-base ">Posted on {dateParse}</p>
         <p className="text-balance">{content}</p>
@@ -55,9 +61,11 @@ const BlogCard = ({ title, content, date, author, id }:getBlog) => {
             <button className="bg-red-600 p-2 rounded" onClick={deleteBlog}>Delete</button>
           </span>
           <span className="text-left">
-            <button className="bg-amber-600 p-2 rounded">Update</button>
+           <Link to={`/update/${id}`}> <button className="bg-amber-600 p-2 rounded">Update</button></Link>
           </span>
         </div>
+        <h1 className="font-bold underli">Comments</h1>
+        <AllComment blogId={id}/>
       </div>
 
       <div className="flex flex-col gap-2">

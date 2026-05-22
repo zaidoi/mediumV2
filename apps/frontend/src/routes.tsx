@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import AllBlog from "./pages/AllBlog";
 import Blog from "./pages/Blog";
 import CreateBlog from "./pages/CreateBlog";
+import UpdateBlog from "./pages/UpdateBlog";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,9 @@ const router = createBrowserRouter([
     },{
         path:"/create",
         element:<CreateBlog/>
+    },{
+        path:"/update/:id",
+        element:<UpdateBlog/>
     }
 ])
 

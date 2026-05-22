@@ -4,22 +4,18 @@ import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-
 type blogContent = {
-  title:string,
-  content:string,
-  _id:string,
-  author:{
-    _id:string,
-    name:string
-  }
-  createdAt:string
-}
+  title: string;
+  content: string;
+  _id: string;
+  author: {
+    _id: string;
+    name: string;
+  };
+  createdAt: string;
+};
 
 const Blog = () => {
-
-
-
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [blog, setBlog] = useState<blogContent>();

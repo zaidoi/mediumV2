@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { Blog } from "src/models/models.js";
+import { Blog } from "../models/models.js";
 import common from "@repo/common"
 import type { BlogInput } from "@repo/common/src/zod/models.js";
 const {blogSchema} = common; // This from monorepo because of exports default problem

@@ -5,8 +5,8 @@ import {
   deleteBlog,
   getBlog,
   updateBlog,
-} from "src/controllers/blog.controller.js";
-import { authMiddleware } from "src/middleware/auth.middleware.js";
+} from "../controllers/blog.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const routerOfBlog = express.Router();
 

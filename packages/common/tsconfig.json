@@ -2,10 +2,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "module": "CommonJS",
+    "module": "esnext",
     "target": "ES2020",
     "declaration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "bundler"
   },
   "include": ["src"]
 }
